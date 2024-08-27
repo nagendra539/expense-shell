@@ -35,5 +35,13 @@ VALIDATE $? "mysql-server"
 systemctl statrt mysqld &>>${LOG_FILE}
 VALIDATE $? "mysql-server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1
-VALIDATE $? "mysql-server"
+# This is for idempotency. we can run the sript many times, behavior will not change.
+mysql -h mysql.sn2.online -u root -pExpenseApp@1 -e 'show databases;' &>>${LOG_FILE}
+if [ $? -ne 0 ]
+then
+    echo "mysql root password was not setup, setting up"
+    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>${LOG_FILE}
+    VALIDATE $? "settingup root password"
+else
+    echo "successfully connected to the DB"
+fi
