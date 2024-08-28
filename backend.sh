@@ -75,5 +75,5 @@ VALIDATE $? "daemon-reload"
 systemctl enable backend &>>${LOG_FILE}
 VALIDATE $? "enable th backend service"
 
-systemctl start backend &>>${LOG_FILE}
+systemctl restart backend &>>${LOG_FILE}
 VALIDATE $? "started the backend"
