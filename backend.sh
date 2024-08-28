@@ -47,8 +47,6 @@ id expense &>>${LOG_FILE}
         echo "user was already present, skipping it" | tee ${LOG_FILE}
     fi
 }
-useradd expense &>>${LOG_FILE}
-VALIDATE $? "Expense User Created"
 
 mkdir -p /app &>>${LOG_FILE}
 VALIDATE $? "Creation of /app directory"
