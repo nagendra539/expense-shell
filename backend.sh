@@ -40,11 +40,11 @@ id expense &>>${LOG_FILE}
 {
     if [ $? -ne 0 ]
     then    
-        echo "adding the user Expense" | tee  ${LOG_FILE}
+        echo "adding the user Expense" &>> tee  ${LOG_FILE}
         useradd expense
         VALIDATE $? "useradd expense"
     else
-        echo "user was already present, skipping it" | tee ${LOG_FILE}
+        echo "user was already present, skipping it" &>> tee ${LOG_FILE}
     fi
 }
 
