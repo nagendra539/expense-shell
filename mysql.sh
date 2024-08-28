@@ -32,7 +32,7 @@ VALIDATE $? "mysql-server installation "
 systemctl enable mysqld &>>${LOG_FILE}
 VALIDATE $? "mysql-server enable" 
 
-systemctl statrt mysqld &>>${LOG_FILE}
+systemctl restart mysqld &>>${LOG_FILE}
 VALIDATE $? "mysql-server process"
 
 # This is for idempotency in nature. we can run the sript many times, behavior will not change.
