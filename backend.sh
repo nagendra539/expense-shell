@@ -27,22 +27,22 @@ VALIDATE(){
 
 CHECKROOT
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>${LOG_FILE}
 VALIDATE $? "disabled the module "
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>${LOG_FILE}
 VALIDATE $? "Enabled the NodeJs-20"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>${LOG_FILE}
 VALIDATE $? "Installed the NodeJS-20"
 
-useradd expense
+useradd expense &>>${LOG_FILE}
 VALIDATE $? "Expense User Created"
 
-mkdir -p /app
+mkdir -p /app &>>${LOG_FILE}
 VALIDATE $? "Creation of /app directory"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>${LOG_FILE}
 cd /app
 rm -rf *
 unzip /tmp/backend.zip
