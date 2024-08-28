@@ -46,4 +46,19 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 cd /app
 rm -rf *
 unzip /tmp/backend.zip
-VALIDATE $? "Un zip the content"
+VALIDATE $? "Un-zip the content"
+
+npm install &>>${LOG_FILE}
+VALIDATE $? "install dependencies"
+
+cp /home/ec2-user/expense-shell /etc/systemd/system/backend.service &>>${LOG_FILE}
+VALIDATE $? "copy backend.service"
+
+systemctl daemon-reload &>>${LOG_FILE}
+VALIDATE $? "daemon-reload"
+
+systemctl enable backend &>>${LOG_FILE}
+VALIDATE $? "enable th backend service"
+
+systemctl start backend &>>${LOG_FILE}
+VALIDATE $? "started the backend"
