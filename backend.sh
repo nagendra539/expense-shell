@@ -60,7 +60,7 @@ VALIDATE $? "Un-zip the content"
 npm install &>>${LOG_FILE}
 VALIDATE $? "install dependencies"
 
-cp /home/ec2-user/expense-shell /etc/systemd/system/backend.service &>>${LOG_FILE}
+cp  /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>${LOG_FILE}
 VALIDATE $? "copy backend.service"
 
 systemctl daemon-reload &>>${LOG_FILE}
