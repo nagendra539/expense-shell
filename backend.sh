@@ -18,10 +18,10 @@ CHECKROOT(){
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
-        echo "$2 was failed, Please check the error" &>>${LOG_FILE}
+        echo "$2 was failed, Please check the error" &>> tee ${LOG_FILE}
         exit 1
     else
-        echo "$2 was success" &>>${LOG_FILE}
+        echo "$2 was success" &>> tee ${LOG_FILE}
     fi
 }
 
