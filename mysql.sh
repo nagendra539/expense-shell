@@ -18,22 +18,22 @@ CHECKROOT(){
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
-        echo "install of $2 was failed, Please check the error" &>>${LOG_FILE}
+        echo "$2 was failed, Please check the error" &>>${LOG_FILE}
         exit 1
     else
-        echo "install of $2 was success" &>>${LOG_FILE}
+        echo "$2 was success" &>>${LOG_FILE}
     fi
 }
 
 CHECKROOT
 dnf install  mysql-server -y &>>${LOG_FILE} 
-VALIDATE $? "mysql-server"
+VALIDATE $? "mysql-server installation "
 
 systemctl enable mysqld &>>${LOG_FILE}
-VALIDATE $? "mysql-server" 
+VALIDATE $? "mysql-server enable" 
 
 systemctl statrt mysqld &>>${LOG_FILE}
-VALIDATE $? "mysql-server"
+VALIDATE $? "mysql-server process"
 
 # This is for idempotency in nature. we can run the sript many times, behavior will not change.
 mysql -h mysql.sn2.online -u root -pExpenseApp@1 -e 'show databases;' &>>${LOG_FILE}
