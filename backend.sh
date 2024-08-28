@@ -53,8 +53,8 @@ VALIDATE $? "Creation of /app directory"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>${LOG_FILE}
 cd /app
-rm -rf *
-unzip /tmp/backend.zip
+rm -rf /app/*
+unzip /tmp/backend.zip &>>${LOG_FILE}
 VALIDATE $? "Un-zip the content"
 
 npm install &>>${LOG_FILE}
@@ -62,6 +62,12 @@ VALIDATE $? "install dependencies"
 
 cp  /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>${LOG_FILE}
 VALIDATE $? "copy backend.service"
+
+dnf install mysql -y &>>${LOG_FILE}
+VALIDATE $? "install mysql client"
+
+mysql -h mysql.sn2.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>${LOG_FILE}
+VALIDATE $? "Schema loading"
 
 systemctl daemon-reload &>>${LOG_FILE}
 VALIDATE $? "daemon-reload"
